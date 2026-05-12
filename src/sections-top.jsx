@@ -9,6 +9,7 @@ function Navbar() {
     onScroll();
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
   return (
     <motion.nav
       initial={{ y: -20, opacity: 0 }}
@@ -54,7 +55,8 @@ function Navbar() {
             Agendar Demo</motion.a>
         </div>
       </div>
-    </motion.nav>);
+    </motion.nav>
+  );
 }
 
 function Hero() {
@@ -66,7 +68,7 @@ function Hero() {
 
   return (
     <section id="top" data-screen-label="hero" ref={ref}
-    className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
+    className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#0E0B1F]">
       
       {/* Video bg Optimizado por Claf Digital */}
       <motion.div className="absolute -inset-[10%] z-0" style={{ y: videoY, scale: videoScale }}>
@@ -80,18 +82,16 @@ function Hero() {
           className="w-full h-full object-cover"
           style={{ mixBlendMode: 'screen', opacity: 0.78 }}
         >
-          {/* Prioridad al WebM de 1.5MB (Ubicado en la raíz para máxima velocidad) */}
-          <source src="./planeta.webm" type="video/webm" />
-          {/* Backup en assets */}
+          {/* Ruta de raíz para evitar errores de carpeta en Vercel */}
+          <source src="/planeta.webm" type="video/webm" />
           <source src="assets/hero-bg.mp4" type="video/mp4" />
         </video>
         
-        {/* fallback radial */}
         <div className="absolute inset-0 -z-10"
         style={{ background: 'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(0,229,255,0.18) 0%, transparent 70%)' }} />
       </motion.div>
 
-      {/* Overlay radial */}
+      {/* Overlays */}
       <motion.div className="absolute inset-0 z-[1]" style={{ opacity: overlayOpacity }}>
         <div className="absolute inset-0"
         style={{ background: 'radial-gradient(ellipse 80% 70% at 50% 50%, rgba(0,229,255,0.04) 0%, rgba(14,11,31,0.55) 50%, rgba(14,11,31,0.97) 92%)' }} />
@@ -124,7 +124,7 @@ function Hero() {
 
         <FadeUp delay={0.6} y={20} viewport={false} className="mt-7">
           <p className="font-light text-[18px] md:text-[20px] text-white/90 max-w-[620px] mx-auto"
-          style={{ lineHeight: 1.7, opacity: "1", color: "rgb(255, 255, 255)", fontWeight: "400" }}>
+          style={{ lineHeight: 1.7, color: "rgb(255, 255, 255)", fontWeight: "400" }}>
             Tu clínica no cierra cuando tú te vas. Implementa inteligencia artificial que
             atiende, califica y agenda <span className="text-cyan-brand font-medium">24/7</span>.
           </p>
@@ -152,13 +152,13 @@ function Hero() {
               { n: '24/7', l: 'Sin intervención humana' },
               { n: '<3min', l: 'Tiempo de respuesta IA' },
               { n: '$0', l: 'Leads perdidos de noche' }].
-              map((s) =>
-              <div key={s.l} className="text-center">
+              map((s) => (
+                <div key={s.l} className="text-center">
                   <div className="font-mono font-extrabold text-[34px] md:text-[38px] text-cyan-brand"
-                style={{ textShadow: '0 0 30px rgba(0,229,255,.45)' }}>{s.n}</div>
-                  <div className="mt-1.5 text-[13px] text-white/80" style={{ color: "rgba(255, 255, 255, 0.886)" }}>{s.l}</div>
+                  style={{ textShadow: '0 0 30px rgba(0,229,255,.45)' }}>{s.n}</div>
+                  <div className="mt-1.5 text-[13px] text-white/80">{s.l}</div>
                 </div>
-              )}
+              ))}
             </div>
           </div>
         </FadeUp>
@@ -174,17 +174,19 @@ function Hero() {
         </div>
         <span className="font-mono text-[9.5px] text-white/30" style={{ letterSpacing: '.2em', color: "rgb(255, 255, 255)" }}>SCROLL</span>
       </motion.div>
-    </section>);
+    </section>
+  );
 }
 
 function PainSection() {
   const cards = [
-  { icon: '🔕', title: 'Consultas ignoradas',
-    body: 'El 68% de los pacientes elige al primero que contesta. Mientras tu teléfono suena vacío, tu competencia agenda.' },
-  { icon: '📉', title: 'Follow-up inexistente',
-    body: 'Sin seguimiento automático, el 40% de los leads calificados se enfrían antes de la primera consulta real.' },
-  { icon: '🌙', title: 'Pérdida nocturna de facturación',
-    body: 'Tu agenda duerme 8 horas. Tu IA, no. Cada noche sin respuesta es revenue que se va para siempre.' }];
+    { icon: '🔕', title: 'Consultas ignoradas',
+      body: 'El 68% de los pacientes elige al primero que contesta. Mientras tu teléfono suena vacío, tu competencia agenda.' },
+    { icon: '📉', title: 'Follow-up inexistente',
+      body: 'Sin seguimiento automático, el 40% de los leads calificados se enfrían antes de la primera consulta real.' },
+    { icon: '🌙', title: 'Pérdida nocturna de facturación',
+      body: 'Tu agenda duerme 8 horas. Tu IA, no. Cada noche sin respuesta es revenue que se va para siempre.' }
+  ];
 
   return (
     <Section id="problema" className="py-32 md:py-36"
@@ -206,20 +208,20 @@ function PainSection() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-16">
-        {cards.map((c, i) =>
-        <motion.div
-          key={c.title}
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-10%' }}
-          transition={{ duration: 0.8, delay: i * 0.15, ease: EASE }}
-          className="glass glass-hover-red relative p-10">
-          
+        {cards.map((c, i) => (
+          <motion.div
+            key={c.title}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-10%' }}
+            transition={{ duration: 0.8, delay: i * 0.15, ease: EASE }}
+            className="glass glass-hover-red relative p-10">
+            
             <div className="absolute top-6 right-7 font-mono text-[11px] text-white/15 tracking-widest" style={{ color: "rgb(255, 255, 255)" }}>
               0{i + 1} / 03
             </div>
             <div className="w-[52px] h-[52px] rounded-[14px] flex items-center justify-center text-[24px]"
-          style={{ background: 'rgba(255,23,68,0.10)', border: '1px solid rgba(255,23,68,0.25)' }}>
+            style={{ background: 'rgba(255,23,68,0.10)', border: '1px solid rgba(255,23,68,0.25)' }}>
               <span>{c.icon}</span>
             </div>
             <h3 className="font-display font-bold text-[22px] text-white mt-7" style={{ letterSpacing: '-0.02em' }}>
@@ -229,9 +231,10 @@ function PainSection() {
               {c.body}
             </p>
           </motion.div>
-        )}
+        ))}
       </div>
-    </Section>);
+    </Section>
+  );
 }
 
 Object.assign(window, { Navbar, Hero, PainSection });
