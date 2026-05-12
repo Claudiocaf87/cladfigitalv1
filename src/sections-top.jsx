@@ -36,7 +36,7 @@ function Navbar() {
         </div>
         <div className="flex items-center gap-4">
           <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full"
-          style={{ color: "rgb(255, 23, 68)", border: "1px solid rgb(255, 23, 68)", backgroundImage: "initial", backgroundPosition: "initial", backgroundSize: "initial", backgroundRepeat: "initial", backgroundAttachment: "initial", backgroundOrigin: "initial", backgroundClip: "initial", background: "rgba(255, 255, 255, 0)" }}>
+          style={{ color: "rgb(255, 23, 68)", border: "1px solid rgb(255, 23, 68)", background: "rgba(255, 255, 255, 0)" }}>
             <span className="w-1.5 h-1.5 rounded-full dot-pulse" style={{ boxShadow: '0 0 10px #00E676', background: "rgb(255, 23, 68)" }}></span>
             <span className="font-medium text-[12px] text-[#00E676]" style={{ color: "rgb(255, 255, 255)" }}>IA Activa</span>
           </div>
@@ -55,7 +55,6 @@ function Navbar() {
         </div>
       </div>
     </motion.nav>);
-
 }
 
 function Hero() {
@@ -68,13 +67,25 @@ function Hero() {
   return (
     <section id="top" data-screen-label="hero" ref={ref}
     className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
-      {/* Video bg */}
+      
+      {/* Video bg Optimizado por Claf Digital */}
       <motion.div className="absolute -inset-[10%] z-0" style={{ y: videoY, scale: videoScale }}>
-        <video autoPlay loop muted playsInline preload="metadata"
-        className="w-full h-full object-cover"
-        style={{ mixBlendMode: 'screen', opacity: 0.78 }}>
+        <video 
+          autoPlay 
+          loop 
+          muted 
+          playsInline 
+          preload="auto"
+          poster="assets/poster-planeta.jpg"
+          className="w-full h-full object-cover"
+          style={{ mixBlendMode: 'screen', opacity: 0.78 }}
+        >
+          {/* Prioridad al WebM de 1.5MB (Ubicado en la raíz para máxima velocidad) */}
+          <source src="./planeta.webm" type="video/webm" />
+          {/* Backup en assets */}
           <source src="assets/hero-bg.mp4" type="video/mp4" />
         </video>
+        
         {/* fallback radial */}
         <div className="absolute inset-0 -z-10"
         style={{ background: 'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(0,229,255,0.18) 0%, transparent 70%)' }} />
@@ -84,10 +95,8 @@ function Hero() {
       <motion.div className="absolute inset-0 z-[1]" style={{ opacity: overlayOpacity }}>
         <div className="absolute inset-0"
         style={{ background: 'radial-gradient(ellipse 80% 70% at 50% 50%, rgba(0,229,255,0.04) 0%, rgba(14,11,31,0.55) 50%, rgba(14,11,31,0.97) 92%)' }} />
-        {/* top fade behind navbar */}
         <div className="absolute inset-x-0 top-0 h-40"
         style={{ background: 'linear-gradient(180deg, rgba(14,11,31,.85), transparent)' }} />
-        {/* bottom fade */}
         <div className="absolute inset-x-0 bottom-0 h-48"
         style={{ background: 'linear-gradient(0deg, #0E0B1F, transparent)' }} />
       </motion.div>
@@ -129,7 +138,6 @@ function Hero() {
             <GhostCTA
               icon={<span className="text-cyan-brand">▶</span>}
               onClick={() => document.getElementById('simulador')?.scrollIntoView({ behavior: 'smooth' })}>
-              
               Ver en acción
             </GhostCTA>
           </div>
@@ -160,7 +168,6 @@ function Hero() {
       <motion.div
         initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.6, duration: 1 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 z-[3] flex flex-col items-center gap-2">
-        
         <div className="w-[22px] h-[36px] rounded-full flex items-start justify-center pt-2"
         style={{ border: "1px solid rgb(255, 255, 255)" }}>
           <span className="w-[3px] h-[6px] rounded-full mouse-wheel" style={{ background: "rgb(255, 255, 255)" }}></span>
@@ -168,7 +175,6 @@ function Hero() {
         <span className="font-mono text-[9.5px] text-white/30" style={{ letterSpacing: '.2em', color: "rgb(255, 255, 255)" }}>SCROLL</span>
       </motion.div>
     </section>);
-
 }
 
 function PainSection() {
@@ -226,7 +232,6 @@ function PainSection() {
         )}
       </div>
     </Section>);
-
 }
 
 Object.assign(window, { Navbar, Hero, PainSection });
