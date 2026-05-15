@@ -1,180 +1,566 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Claf Digital — IA para Clínicas</title>
-<link rel="icon" href="assets/claf-logo.png" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0E0B1F">
+<title>Claf Digital — IA para Clínicas 24/7</title>
+<meta name="description" content="Inteligencia artificial que atiende, califica y agenda pacientes 24/7. Recuperá las consultas que tu clínica está perdiendo cada noche.">
 
+<link rel="icon" href="assets/claf-logo.png">
+
+<!-- Fonts: only one family (Inter) + display=swap → no CLS, no FOUT, light payload -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700;800&display=swap">
 
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-  tailwind.config = {
-    theme: {
-      extend: {
-        fontFamily: {
-          display: ['Syne', 'system-ui', 'sans-serif'],
-          sans: ['Inter', 'system-ui', 'sans-serif'],
-          mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
-        },
-        colors: {
-          deep: '#0E0B1F',
-          primary: '#16122A',
-          cyan: { brand: '#00E5FF' },
-          red: { cta: '#FF1744' },
-        },
-      },
-    },
-  };
-</script>
-
-<style>
-  :root{
-    --bg-deep:#0E0B1F;
-    --bg-primary:#16122A;
-    --cyan:#00E5FF;
-    --red-cta:#FF1744;
-  }
-  html,body{background:var(--bg-deep);color:#fff;font-family:'Inter',system-ui,sans-serif;}
-  body{font-weight:300;-webkit-font-smoothing:antialiased;}
-  ::selection{background:rgba(0,229,255,.30);color:#fff;}
-  /* hide scrollbar for marquee rows */
-  .no-scrollbar::-webkit-scrollbar{display:none;}
-  .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}
-  /* glass utility */
-  .glass{
-    background:rgba(255,255,255,0.04);
-    backdrop-filter:blur(24px) saturate(180%);
-    -webkit-backdrop-filter:blur(24px) saturate(180%);
-    border:1px solid rgba(255,255,255,0.08);
-    border-radius:24px;
-    transition:all .4s cubic-bezier(.23,1,.32,1);
-  }
-  .glass-hover-cyan:hover{
-    background:rgba(255,255,255,0.07);
-    border-color:rgba(0,229,255,0.30);
-    box-shadow:0 0 40px rgba(0,229,255,0.08), inset 0 0 0 1px rgba(0,229,255,0.15);
-    transform:translateY(-6px);
-  }
-  .glass-hover-red:hover{
-    background:rgba(255,255,255,0.07);
-    border-color:rgba(255,23,68,0.30);
-    box-shadow:0 0 40px rgba(255,23,68,0.10), inset 0 0 0 1px rgba(255,23,68,0.12);
-    transform:translateY(-6px);
-  }
-  /* gradient text helper */
-  .text-grad-cyan{
-    background:linear-gradient(135deg,#FFFFFF 0%, #00E5FF 50%, #7B8FFF 100%);
-    -webkit-background-clip:text;background-clip:text;color:transparent;
-  }
-  .text-grad-logo{
-    background:linear-gradient(120deg,#FFFFFF 0%, #00E5FF 100%);
-    -webkit-background-clip:text;background-clip:text;color:transparent;
-  }
-  /* pulse for CTAs */
-  @keyframes pulseRed {
-    0% { box-shadow:0 0 0 0 rgba(255,23,68,.55), 0 0 24px rgba(255,23,68,.35); }
-    70%{ box-shadow:0 0 0 14px rgba(255,23,68,0), 0 0 30px rgba(255,23,68,.25); }
-    100%{box-shadow:0 0 0 0 rgba(255,23,68,0), 0 0 24px rgba(255,23,68,.35); }
-  }
-  .pulse-red{ animation: pulseRed 2.2s cubic-bezier(.4,0,.2,1) infinite; }
-  /* dot pulse */
-  @keyframes dotPulse { 0%,100%{transform:scale(1);opacity:1;} 50%{transform:scale(1.4);opacity:.55;} }
-  .dot-pulse{ animation: dotPulse 1.6s ease-in-out infinite; }
-  /* typing dots */
-  @keyframes blinkOpacity { 0%,80%,100%{opacity:.25;} 40%{opacity:1;} }
-  .typing-dot{ animation: blinkOpacity 1.2s infinite; }
-  /* waveform bars */
-  @keyframes wave {
-    0%,100%{ transform: scaleY(.30); }
-    50%{ transform: scaleY(1); }
-  }
-  .wave-bar{ transform-origin: 50% 50%; animation: wave 1.1s ease-in-out infinite; }
-  /* marquee */
-  @keyframes marqueeL { from{transform:translateX(0);} to{transform:translateX(-50%);} }
-  @keyframes marqueeR { from{transform:translateX(-50%);} to{transform:translateX(0);} }
-  .marquee-track-l{ animation: marqueeL 60s linear infinite; }
-  .marquee-track-r{ animation: marqueeR 75s linear infinite; }
-  .marquee-pause:hover .marquee-track-l,
-  .marquee-pause:hover .marquee-track-r{ animation-play-state: paused; }
-  /* call ripple */
-  @keyframes ripple { 0%{transform:scale(.85);opacity:.55;} 100%{transform:scale(2.3);opacity:0;} }
-  .ring-ripple{ animation: ripple 2.1s cubic-bezier(.4,0,.2,1) infinite; }
-  /* slider */
-  .claf-slider{
-    -webkit-appearance:none; appearance:none;
-    width:100%; height:4px; border-radius:2px;
-    background: linear-gradient(to right, #00E5FF 0%, #7B8FFF var(--p,50%), rgba(255,255,255,0.08) var(--p,50%), rgba(255,255,255,0.08) 100%);
-    outline:none; cursor:pointer;
-  }
-  .claf-slider::-webkit-slider-thumb{
-    -webkit-appearance:none; appearance:none;
-    width:22px; height:22px; border-radius:50%;
-    background: linear-gradient(135deg,#00E5FF,#7B8FFF);
-    box-shadow: 0 0 14px rgba(0,229,255,.55), 0 0 0 6px rgba(0,229,255,.05);
-    cursor:pointer; border:0;
-  }
-  .claf-slider::-moz-range-thumb{
-    width:22px; height:22px; border-radius:50%;
-    background: linear-gradient(135deg,#00E5FF,#7B8FFF);
-    box-shadow: 0 0 14px rgba(0,229,255,.55);
-    cursor:pointer; border:0;
-  }
-  /* scroll mouse */
-  @keyframes wheel { 0%{transform:translateY(0);opacity:1;} 60%{opacity:.2;} 100%{transform:translateY(8px);opacity:0;} }
-  .mouse-wheel{ animation: wheel 1.6s ease-in-out infinite; }
-  /* gradient pricing border */
-  .pricing-border{
-    position:relative; border-radius:32px;
-    background:rgba(255,255,255,.035);
-    backdrop-filter:blur(32px) saturate(180%);
-    border:1px solid rgba(0,229,255,.12);
-  }
-  .pricing-border::before{
-    content:""; position:absolute; inset:-1px; border-radius:33px; padding:2px;
-    background:linear-gradient(90deg, transparent 0%, #00E5FF 30%, #FF1744 50%, #00E5FF 70%, transparent 100%);
-    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor; mask-composite: exclude;
-    pointer-events:none;
-    opacity:.85;
-  }
-  /* whatsapp chat noise */
-  .wa-bg{
-    background-color:#0D1117;
-    background-image:
-      radial-gradient(rgba(255,255,255,.02) 1px, transparent 1px),
-      radial-gradient(rgba(0,229,255,.02) 1px, transparent 1px);
-    background-size: 14px 14px, 22px 22px;
-    background-position: 0 0, 7px 11px;
-  }
-  /* nav links underline */
-  .nav-link{position:relative;}
-  .nav-link::after{
-    content:""; position:absolute; left:0; right:0; bottom:-6px; height:1px;
-    background:linear-gradient(90deg,transparent,#00E5FF,transparent);
-    transform:scaleX(0); transform-origin:center; transition:transform .35s ease;
-  }
-  .nav-link:hover::after{ transform:scaleX(1); }
-</style>
+<link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-deep text-white">
+<body>
 
-<div id="root"></div>
+<!-- ========================================
+     NAVBAR
+     ======================================== -->
+<nav class="nav" data-screen-label="00 Nav">
+  <div class="container nav-inner">
+    <a href="#top" class="nav-logo" aria-label="Claf Digital">
+      <img src="assets/claf-logo.png" alt="Claf Digital" width="40" height="40">
+    </a>
+    <div class="nav-links" style="color: rgb(255, 255, 255)">
+      <a href="#top">Inicio</a>
+      <a href="#soluciones">Servicios</a>
+      <a href="#testimonios">Casos</a>
+      <a href="#pricing">Planes</a>
+    </div>
+    <div class="nav-right">
+      <span class="live-badge" style="color: rgb(255, 255, 255); background-color: rgba(255, 23, 68, 0); border-color: rgb(255, 23, 68)"><span class="dot green" style="background-color: rgb(255, 23, 68)"></span> IA Activa</span>
+      <a href="https://calendly.com/claudiocaf87/consultoria" target="_blank" rel="noopener noreferrer" class="nav-cta">Agendar Demo</a>
+    </div>
+  </div>
+</nav>
 
-<!-- React + Babel -->
-<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/framer-motion@11.11.17/dist/framer-motion.js"></script>
-<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<!-- ========================================
+     HERO
+     ======================================== -->
+<section id="top" class="hero" data-screen-label="01 Hero">
+  <div class="hero-video">
+    <video autoplay loop muted playsinline preload="none" poster="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23050410'/%3E%3C/svg%3E">
+      <source src="planeta.webm" type="video/webm">
+    </video>
+  </div>
+  <div class="hero-overlay"></div>
 
-<script type="text/babel" src="src/primitives.jsx"></script>
-<script type="text/babel" src="src/sections-top.jsx"></script>
-<script type="text/babel" src="src/sections-mid.jsx"></script>
-<script type="text/babel" src="src/sections-end.jsx"></script>
-<script type="text/babel" src="src/app.jsx"></script>
+  <div class="hero-inner">
+    <div class="reveal">
+      <div class="tag-pill" style="color: rgb(255, 255, 255); background-color: rgba(255, 23, 68, 0); opacity: 0.1; border-color: rgb(255, 23, 68)"><span class="dot cyan" style="background-color: rgb(255, 23, 68)"></span> AGENCIA IA PARA CLÍNICAS</div>
+    </div>
+    <h1 class="reveal d1">
+      <span class="muted">Mientras el mundo gira,</span><br>
+      <span class="grad-cyan">tus pacientes agendan.</span>
+    </h1>
+    <p class="lead reveal d2">
+      Tu clínica no cierra cuando tú te vas. Implementa inteligencia artificial que
+      atiende, califica y agenda <span class="acc">24/7</span>.
+    </p>
+    <div class="hero-cta reveal d3">
+      <a href="https://calendly.com/claudiocaf87/consultoria" target="_blank" rel="noopener noreferrer" class="btn btn-primary pulse-red">
+        Agendar Demo de Valoración
+      </a>
+    </div>
 
+    <div class="hero-stats reveal d4">
+      <div class="stats-grid">
+        <div>
+          <div class="stat-n">+340%</div>
+          <div class="stat-l" style="color: rgb(255, 255, 255)">Consultas recuperadas</div>
+        </div>
+        <div>
+          <div class="stat-n">24/7</div>
+          <div class="stat-l" style="color: rgb(255, 255, 255)">Sin intervención humana</div>
+        </div>
+        <div>
+          <div class="stat-n">&lt;3min</div>
+          <div class="stat-l" style="color: rgb(255, 255, 255)">Tiempo de respuesta IA</div>
+        </div>
+        <div>
+          <div class="stat-n">$0</div>
+          <div class="stat-l" style="color: rgb(255, 255, 255)">Leads perdidos de noche</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-ind" aria-hidden="true" style="color: rgb(255, 255, 255)">
+    <div class="mouse" style="border-color: rgb(255, 255, 255)"><span style="background-color: rgb(255, 255, 255)"></span></div>
+    <small style="color: rgb(255, 255, 255)">SCROLL</small>
+  </div>
+</section>
+
+<!-- ========================================
+     PAIN
+     ======================================== -->
+<section id="problema" class="pain" data-screen-label="02 Pain">
+  <div class="container">
+    <div class="pain-head">
+      <div class="reveal"><div class="eyebrow red" style="font-size: 15px; font-weight: 700">EL PROBLEMA REAL</div></div>
+      <h2 class="reveal d1">Tu clínica pierde dinero <span class="muted">cada vez que</span> no responde.</h2>
+      <p class="lead reveal d2">
+        Cada llamada perdida no es solo una llamada. Es un paciente que ya está hablando con otra clínica
+        antes de que termines de leer el WhatsApp.
+      </p>
+    </div>
+
+    <div class="pain-grid">
+      <article class="glass red-hover pain-card reveal">
+        <span class="num" style="color: rgb(255, 255, 255)">01 / 03</span>
+        <span class="pain-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <path d="M4 4l16 16M9 6.5A8 8 0 0 1 19 12M6.5 9A8 8 0 0 0 12 19M12 19l3.5-2v-2l-2-1"/>
+          </svg>
+        </span>
+        <h3>Consultas ignoradas</h3>
+        <p>El 68% de los pacientes elige al primero que contesta. Mientras tu teléfono suena vacío, tu competencia agenda.</p>
+      </article>
+
+      <article class="glass red-hover pain-card reveal d1">
+        <span class="num" style="color: rgb(255, 255, 255)">02 / 03</span>
+        <span class="pain-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 17l6-6 4 4 8-9"/><path d="M14 6h7v7"/>
+            <path d="M3 21h18" opacity=".4"/>
+          </svg>
+        </span>
+        <h3>Follow-up inexistente</h3>
+        <p>Sin seguimiento automático, el 40% de los leads calificados se enfrían antes de la primera consulta real.</p>
+      </article>
+
+      <article class="glass red-hover pain-card reveal d2">
+        <span class="num" style="color: rgb(255, 255, 255)">03 / 03</span>
+        <span class="pain-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 14A8 8 0 0 1 10 4a8 8 0 1 0 10 10z"/>
+          </svg>
+        </span>
+        <h3>Pérdida nocturna</h3>
+        <p>Tu agenda duerme 8 horas. Tu IA, no. Cada noche sin respuesta es revenue que se va para siempre.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================
+     ROI CALCULATOR
+     ======================================== -->
+<section id="roi" class="roi" data-screen-label="03 ROI">
+  <div class="container">
+    <div class="roi-head">
+      <div class="reveal" style="display: flex; justify-content: center;"><div class="eyebrow" style="font-size: 15px; font-weight: 700">CALCULADORA DE ROI</div></div>
+      <h2 class="reveal d1">¿Cuánto estás dejando de <span class="grad-cyan">ganar cada mes</span>?</h2>
+      <p class="reveal d2" style="color: rgb(255, 255, 255)">Mové los sliders. Mirá el número. Después hablamos.</p>
+    </div>
+
+    <div class="roi-card reveal d2">
+      <div class="roi-grid">
+        <div>
+          <div class="roi-step-label" style="color: rgb(255, 255, 255)">01 — TUS NÚMEROS</div>
+
+          <div class="slider-row">
+            <div class="slider-head">
+              <label for="s-consultas">Consultas perdidas por mes</label>
+              <output id="o-consultas">30</output>
+            </div>
+            <input id="s-consultas" class="claf-slider" type="range" min="5" max="300" step="5" value="30">
+          </div>
+
+          <div class="slider-row">
+            <div class="slider-head">
+              <label for="s-ticket">Ticket promedio por paciente</label>
+              <output id="o-ticket">$200</output>
+            </div>
+            <input id="s-ticket" class="claf-slider" type="range" min="50" max="2000" step="50" value="200">
+          </div>
+
+          <div class="slider-row">
+            <div class="slider-head">
+              <label for="s-tasa">Tasa de recuperación IA</label>
+              <output id="o-tasa">65%</output>
+            </div>
+            <input id="s-tasa" class="claf-slider" type="range" min="30" max="85" step="5" value="65">
+          </div>
+        </div>
+
+        <div class="roi-divider"></div>
+
+        <div class="roi-result">
+          <div>
+            <div class="cap" style="color: rgb(255, 255, 255)">Dinero recuperado al mes</div>
+            <div id="roi-big" class="big">$3,900</div>
+            <div id="roi-formula" class="calc" style="color: rgb(255, 255, 255)">30 consultas × $200 × 65%</div>
+            <div class="roi-divider-h"></div>
+            <div class="roi-ann">Al año: <b id="roi-ann">$46,800</b> recuperados</div>
+          </div>
+          <a href="https://calendly.com/claudiocaf87/consultoria" target="_blank" rel="noopener noreferrer" class="roi-cta">Quiero recuperar ese dinero →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================
+     BENTO GRID — SOLUTIONS
+     ======================================== -->
+<section id="soluciones" class="solutions" data-screen-label="04 Solutions">
+  <div class="container">
+    <div class="pain-head">
+      <div class="reveal"><div class="eyebrow" style="font-size: 15px; font-weight: 700">LA SOLUCIÓN</div></div>
+      <h2 class="reveal d1">Todo lo que necesita tu clínica. <span class="muted">Nada que no necesita.</span></h2>
+      <p class="lead reveal d2" style="color: rgb(255, 255, 255)">Una sola plataforma. Cinco capacidades. Cero fricción.</p>
+    </div>
+
+    <div class="bento">
+
+      <!-- A: voice agent -->
+      <article class="glass bento-card b-a reveal">
+        <span class="live-tag"><span class="dot"></span> ACTIVO 24/7</span>
+        <div class="bicon bicon-cyan">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <path d="M5 9c1.7 0 3 1.3 3 3v3c0 1.7-1.3 3-3 3s-3-1.3-3-3v-3c0-1.7 1.3-3 3-3zM19 9c1.7 0 3 1.3 3 3v3c0 1.7-1.3 3-3 3s-3-1.3-3-3v-3c0-1.7 1.3-3 3-3z"/>
+            <path d="M4 9V8a8 8 0 1 1 16 0v1"/>
+          </svg>
+        </div>
+        <h3>Agentes de Voz IA</h3>
+        <p>Conversaciones telefónicas completamente automatizadas. Califica leads, responde preguntas frecuentes, agenda y hace seguimiento. Suena como un humano real.</p>
+
+        <div class="iphone-demo">
+          <div id="iphone" class="iphone">
+            <div class="iphone-island"><span class="island-dot"></span></div>
+            <div class="iphone-screen">
+              <div class="ip-mic-circle" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="9" y="3" width="6" height="12" rx="3"/>
+                  <path d="M5 11a7 7 0 0 0 14 0M12 18v3M8 21h8"/>
+                </svg>
+              </div>
+              <div class="ip-name">Asistente IA · Claf</div>
+              <div id="ip-sub" class="ip-sub">Tocá para escuchar</div>
+              <div class="ip-bars" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span>
+              </div>
+              <div class="ip-progress" aria-hidden="true"><span id="ip-progress-fill" class="ip-progress-fill"></span></div>
+              <button id="ip-play" class="ip-play" type="button" aria-label="Reproducir demo de voz">
+                <svg class="ic-play" width="18" height="18" viewBox="0 0 14 14" fill="currentColor"><path d="M3 1.5v11l10-5.5z"/></svg>
+                <svg class="ic-pause" width="18" height="18" viewBox="0 0 14 14" fill="currentColor"><rect x="2" y="1.5" width="3.2" height="11" rx="1"/><rect x="8.8" y="1.5" width="3.2" height="11" rx="1"/></svg>
+              </button>
+              <div id="ip-time" class="ip-time">01:24</div>
+            </div>
+          </div>
+        </div>
+        <audio id="demo-audio" src="assets/demo-voz.mp3" preload="metadata"></audio>
+      </article>
+
+      <!-- B: WhatsApp -->
+      <article class="glass bento-card b-b reveal d1">
+        <div class="bento-head">
+          <div class="bicon bicon-green">
+            <img src="assets/whatsapp.png" alt="WhatsApp" width="36" height="36" loading="lazy">
+          </div>
+          <span class="bento-num">02</span>
+        </div>
+        <h3>WhatsApp Automation</h3>
+        <p>Conversaciones inteligentes que convierten chats en pacientes agendados.</p>
+        <div class="chat-prev">
+          <div class="bubble in">¡Hola! ¿En qué puedo ayudarte?</div>
+          <div class="bubble out">Quiero agendar</div>
+        </div>
+        <a href="#pricing" class="link">Ver planes <span>→</span></a>
+      </article>
+
+      <!-- C: Direct scheduling -->
+      <article class="glass bento-card b-c reveal d2">
+        <div class="bento-head">
+          <div class="bicon bicon-soft-cyan">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+              <rect x="3" y="5" width="18" height="16" rx="3"/>
+              <path d="M3 9h18M8 3v4M16 3v4" stroke-linecap="round"/>
+              <rect x="7" y="12" width="3" height="3" rx=".5" fill="currentColor"/>
+            </svg>
+          </div>
+          <span class="bento-num">03</span>
+        </div>
+        <h3>Agendamiento Directo</h3>
+        <div class="zero">
+          <span class="n">0</span>
+          <span class="l">llamadas de coordinación</span>
+        </div>
+        <p class="sub">El paciente elige, el sistema confirma. Sin idas y vueltas.</p>
+      </article>
+
+      <!-- D: Dashboard -->
+      <article class="glass bento-card b-d reveal d1">
+        <div class="bento-head">
+          <div class="bicon bicon-soft-violet">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+              <path d="M3 21V11M9 21V7M15 21V13M21 21V4" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span class="bento-num">04</span>
+        </div>
+        <h3>Dashboard de Métricas</h3>
+        <div class="b-d-chart" aria-hidden="true">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar hi"></span>
+        </div>
+        <div class="b-d-num" data-count="340" data-prefix="+" data-suffix="%">+0%</div>
+        <div class="b-d-cap">promedio de conversión con IA</div>
+      </article>
+
+      <!-- E: Follow-up -->
+      <article class="glass bento-card b-e reveal d2">
+        <div class="bento-head">
+          <div class="bicon bicon-soft-cyan">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/>
+            </svg>
+          </div>
+          <span class="bento-num">05</span>
+        </div>
+        <h3>Follow-up Automático</h3>
+        <p>Secuencias de seguimiento que no requieren intervención humana.</p>
+        <div class="timeline">
+          <div class="tl-step"><span class="num">1</span><span class="lbl">Primer mensaje</span></div>
+          <div class="tl-line"></div>
+          <div class="tl-step"><span class="num">2</span><span class="lbl">Recordatorio 48h</span></div>
+          <div class="tl-line"></div>
+          <div class="tl-step"><span class="num">3</span><span class="lbl">Cierre &amp; confirmación</span></div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- PHONE SIMULATOR REMOVED — replaced by iPhone player inside the Voice Agent bento card -->
+
+<!-- ========================================
+     TESTIMONIALS
+     ======================================== -->
+<section id="testimonios" class="testi" data-screen-label="06 Testimonials">
+  <div class="container">
+    <div class="testi-head">
+      <div class="reveal" style="display: flex; justify-content: center;"><div class="eyebrow" style="font-size: 15px; font-weight: 700">RESULTADOS REALES</div></div>
+      <h2 class="reveal d1">Clínicas que <span class="grad-cyan">ya no pierden</span> pacientes.</h2>
+    </div>
+  </div>
+
+  <div class="marquees">
+    <!-- Row 1 (left) -->
+    <div class="row">
+      <div class="track l">
+        <!-- Six cards, then duplicated to enable seamless loop -->
+        <article class="tcard">
+          <div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg></div>
+          <blockquote>"En 30 días recuperamos 47 consultas nocturnas. El sistema funciona completamente solo. ROI el primer mes."</blockquote>
+          <div class="who">
+            <div class="crest" style="background:linear-gradient(135deg,rgba(0,229,255,.25),rgba(123,143,255,.25));border:1px solid rgba(0,229,255,.30)">CL</div>
+            <div><div class="nm">Clínica Estética Lumina</div><div class="rl">Estética · 12 staff</div></div>
+          </div>
+        </article>
+        <article class="tcard">
+          <div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg></div>
+          <blockquote>"El 80% de los agendamientos ahora los maneja la IA. Mi equipo se concentra en lo que importa: el paciente."</blockquote>
+          <div class="who">
+            <div class="crest" style="background:linear-gradient(135deg,rgba(255,23,68,.20),rgba(255,107,154,.20));border:1px solid rgba(255,23,68,.30)">CV</div>
+            <div><div class="nm">Centro Médico Vitaliza</div><div class="rl">Médico general · 20 staff</div></div>
+          </div>
+        </article>
+        <article class="tcard">
+          <div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg></div>
+          <blockquote>"Setup una tarde, resultados desde el día siguiente. Nunca imaginé que fuera tan fácil y tan rentable."</blockquote>
+          <div class="who">
+            <div class="crest" style="background:linear-gradient(135deg,rgba(123,143,255,.25),rgba(0,229,255,.25));border:1px solid rgba(123,143,255,.30)">DS</div>
+            <div><div class="nm">Dental Sonrisa+</div><div class="rl">Odontología · 8 staff</div></div>
+          </div>
+        </article>
+        <!-- duplicate for seamless loop -->
+        <article class="tcard" aria-hidden="true">
+          <div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg></div>
+          <blockquote>"En 30 días recuperamos 47 consultas nocturnas. El sistema funciona completamente solo. ROI el primer mes."</blockquote>
+          <div class="who">
+            <div class="crest" style="background:linear-gradient(135deg,rgba(0,229,255,.25),rgba(123,143,255,.25));border:1px solid rgba(0,229,255,.30)">CL</div>
+            <div><div class="nm">Clínica Estética Lumina</div><div class="rl">Estética · 12 staff</div></div>
+          </div>
+        </article>
+        <article class="tcard" aria-hidden="true">
+          <div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg></div>
+          <blockquote>"El 80% de los agendamientos ahora los maneja la IA. Mi equipo se concentra en lo que importa: el paciente."</blockquote>
+          <div class="who">
+            <div class="crest" style="background:linear-gradient(135deg,rgba(255,23,68,.20),rgba(255,107,154,.20));border:1px solid rgba(255,23,68,.30)">CV</div>
+            <div><div class="nm">Centro Médico Vitaliza</div><div class="rl">Médico general · 20 staff</div></div>
+          </div>
+        </article>
+        <article class="tcard" aria-hidden="true">
+          <div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg></div>
+          <blockquote>"Setup una tarde, resultados desde el día siguiente. Nunca imaginé que fuera tan fácil y tan rentable."</blockquote>
+          <div class="who">
+            <div class="crest" style="background:linear-gradient(135deg,rgba(123,143,255,.25),rgba(0,229,255,.25));border:1px solid rgba(123,143,255,.30)">DS</div>
+            <div><div class="nm">Dental Sonrisa+</div><div class="rl">Odontología · 8 staff</div></div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- Row 2 (right) -->
+    <div class="row">
+      <div class="track r">
+        <article class="tcard">
+          <div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg></div>
+          <blockquote>"Antes perdíamos 20-30 leads por semana sin saberlo. Ahora cada consulta queda registrada y seguida."</blockquote>
+          <div class="who">
+            <div class="crest" style="background:linear-gradient(135deg,rgba(0,230,118,.20),rgba(0,229,255,.20));border:1px solid rgba(0,230,118,.30)">NM</div>
+            <div><div class="nm">Clínica NovaMed</div><div class="rl">Multi-especialidad · 35 staff</div></div>
+          </div>
+        </article>
+        <article class="tcard">
+          <div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg></div>
+          <blockquote>"El agente de voz es indistinguible de un humano real. Nuestros pacientes no saben que hablan con IA."</blockquote>
+          <div class="who">
+            <div class="crest" style="background:linear-gradient(135deg,rgba(255,214,0,.20),rgba(255,138,0,.20));border:1px solid rgba(255,214,0,.30)">FA</div>
+            <div><div class="nm">Fisioterapia Activa</div><div class="rl">Rehabilitación · 6 staff</div></div>
+          </div>
+        </article>
+        <article class="tcard">
+          <div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg></div>
+          <blockquote>"Triplicamos los agendamientos online en 45 días. La inversión se pagó sola en la primera semana."</blockquote>
+          <div class="who">
+            <div class="crest" style="background:linear-gradient(135deg,rgba(255,102,136,.20),rgba(123,143,255,.20));border:1px solid rgba(255,102,136,.30)">DR</div>
+            <div><div class="nm">Centro Derma+</div><div class="rl">Dermatología · 10 staff</div></div>
+          </div>
+        </article>
+        <!-- duplicate for seamless loop -->
+        <article class="tcard" aria-hidden="true">
+          <div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg></div>
+          <blockquote>"Antes perdíamos 20-30 leads por semana sin saberlo. Ahora cada consulta queda registrada y seguida."</blockquote>
+          <div class="who">
+            <div class="crest" style="background:linear-gradient(135deg,rgba(0,230,118,.20),rgba(0,229,255,.20));border:1px solid rgba(0,230,118,.30)">NM</div>
+            <div><div class="nm">Clínica NovaMed</div><div class="rl">Multi-especialidad · 35 staff</div></div>
+          </div>
+        </article>
+        <article class="tcard" aria-hidden="true">
+          <div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg></div>
+          <blockquote>"El agente de voz es indistinguible de un humano real. Nuestros pacientes no saben que hablan con IA."</blockquote>
+          <div class="who">
+            <div class="crest" style="background:linear-gradient(135deg,rgba(255,214,0,.20),rgba(255,138,0,.20));border:1px solid rgba(255,214,0,.30)">FA</div>
+            <div><div class="nm">Fisioterapia Activa</div><div class="rl">Rehabilitación · 6 staff</div></div>
+          </div>
+        </article>
+        <article class="tcard" aria-hidden="true">
+          <div class="stars"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18 5.8 22l1.7-7.2L2 10l7.1-1.1L12 2z"/></svg></div>
+          <blockquote>"Triplicamos los agendamientos online en 45 días. La inversión se pagó sola en la primera semana."</blockquote>
+          <div class="who">
+            <div class="crest" style="background:linear-gradient(135deg,rgba(255,102,136,.20),rgba(123,143,255,.20));border:1px solid rgba(255,102,136,.30)">DR</div>
+            <div><div class="nm">Centro Derma+</div><div class="rl">Dermatología · 10 staff</div></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================
+     PRICING — editable placeholders
+     ======================================== -->
+<section id="pricing" class="pricing" data-screen-label="07 Pricing">
+  <div class="container">
+    <div class="pricing-head">
+      <div class="reveal" style="display: flex; justify-content: center;"><div class="eyebrow" style="font-size: 15px">PLANES</div></div>
+      <h2 class="reveal d1">Elegí el plan. <span class="grad-cyan">El resto lo hacemos nosotros.</span></h2>
+      <p class="reveal d2" style="color: rgb(255, 255, 255)">Sin sorpresas. Sin contratos. Sin letra chica.</p>
+    </div>
+
+    <div class="plans">
+
+      <article class="plan reveal">
+        <div class="plan-name" style="color: rgb(255, 255, 255)">Starter</div>
+        <div class="plan-price">
+          <span class="cur">$</span>
+          <span class="num">XXX</span>
+          <span class="per">/ mes</span>
+        </div>
+        <p class="plan-summary">Para clínicas que arrancan con automatización.</p>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>Agente WhatsApp 24/7</li>
+          <li>Agendamiento directo en tu calendario</li>
+          <li>Hasta 500 conversaciones / mes</li>
+          <li>Dashboard básico</li>
+          <li>Soporte por email</li>
+        </ul>
+        <a href="https://calendly.com/claudiocaf87/consultoria" target="_blank" rel="noopener noreferrer" class="plan-cta ghost">Empezar →</a>
+      </article>
+
+      <article class="plan featured reveal d1">
+        <span class="plan-badge">Más elegido</span>
+        <div class="plan-name" style="color: rgb(255, 255, 255)">Pro</div>
+        <div class="plan-price">
+          <span class="cur">$</span>
+          <span class="num">XXX</span>
+          <span class="per">/ mes</span>
+        </div>
+        <p class="plan-summary">El plan que recomendamos para la mayoría de clínicas.</p>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>Todo lo del Starter, más:</li>
+          <li>Agente de Voz IA — llamadas ilimitadas</li>
+          <li>Conversaciones ilimitadas en WhatsApp</li>
+          <li>Follow-up automático multi-canal</li>
+          <li>Dashboard completo + reportes</li>
+          <li>Integración con tu CRM</li>
+          <li>Soporte prioritario por WhatsApp</li>
+        </ul>
+        <a href="https://calendly.com/claudiocaf87/consultoria" target="_blank" rel="noopener noreferrer" class="plan-cta solid pulse-red">Agendar Demo →</a>
+      </article>
+
+      <article class="plan reveal d2">
+        <div class="plan-name" style="color: rgb(255, 255, 255)">Enterprise</div>
+        <div class="plan-price">
+          <span class="num" style="font-size: 38px">A medida</span>
+        </div>
+        <p class="plan-summary">Para grupos con múltiples sedes o flujos custom.</p>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>Todo lo del Pro, más:</li>
+          <li>Multi-clínica / multi-sede</li>
+          <li>Voz IA con voz de marca personalizada</li>
+          <li>Integraciones a medida (HIS, PACS, ERP)</li>
+          <li>Onboarding y training in-house</li>
+          <li>Account manager dedicado</li>
+        </ul>
+        <a href="https://calendly.com/claudiocaf87/consultoria" target="_blank" rel="noopener noreferrer" class="plan-cta ghost">Hablar con ventas →</a>
+      </article>
+
+    </div>
+
+    <p class="pricing-foot" style="color: rgb(255, 255, 255)">Sin contrato de permanencia · Cancela cuando quieras · Auditoría gratuita incluida en la demo.</p>
+  </div>
+</section>
+
+<!-- ========================================
+     FOOTER
+     ======================================== -->
+<footer>
+  <div class="footer-inner">
+    <a href="#top" aria-label="Volver al inicio">
+      <img src="assets/claf-logo.png" alt="Claf Digital" width="36" height="36" loading="lazy">
+    </a>
+    <div class="cright" style="color: rgb(255, 255, 255)">© <span id="year">2026</span> Claf Digital · IA para Clínicas</div>
+    <a href="mailto:hola@clafdigital.com">hola@clafdigital.com</a>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
 </body>
 </html>
